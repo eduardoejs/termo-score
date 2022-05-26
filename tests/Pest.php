@@ -11,9 +11,7 @@
 |
 */
 
-use Illuminate\Foundation\Testing\RefreshDatabaseState;
-
-uses(Tests\TestCase::class, RefreshDatabaseState::class)->in('Feature');
+uses(Tests\TestCase::class)->in('Feature');
 
 /*
 |--------------------------------------------------------------------------
