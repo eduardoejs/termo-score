@@ -33,7 +33,7 @@ class Login extends Component
         ];
                         
         if (Auth::attempt($credentials)) {
-            return $this->redirect(route('welcome'));
+            return $this->redirect('/');
         }
 
         return $this->redirect(route('login'));

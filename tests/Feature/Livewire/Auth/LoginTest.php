@@ -13,7 +13,7 @@ it('should be able to login', function () {
         ->set('password', 'password')
         ->call('login')
         ->assertStatus(200)
-        ->assertRedirect(route('welcome'));
+        ->assertRedirect('/');
 
     expect(auth())
         ->check()->toBeTrue()
