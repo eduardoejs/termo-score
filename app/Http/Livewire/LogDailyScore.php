@@ -2,16 +2,22 @@
 
 namespace App\Http\Livewire;
 
+use App\Actions\DailyEntry;
 use App\Models\DailyScore;
+use App\Rules\DetailRule;
+use App\Rules\GameIdRule;
+use App\Rules\ScoreRule;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
-use Illuminate\Support\Str;
 use Livewire\Component;
 
 class LogDailyScore extends Component
 {
-    public ?string $score = null;
+    public ?string $data   = null;
+    public ?string $gameId = null;
+    public ?string $score  = null;
+    public ?string $detail = null;
 
     public function render(): Factory|View|Application
     {
@@ -20,28 +26,18 @@ class LogDailyScore extends Component
 
     public function save()
     {
-        // $gameId = str($this->score)->betweenFirst('#', ' ')->toString();
-        // ou abaixo
-        $gameId = '#' . str($this->score)->betweenFirst('#', ' ')->toString();
+        [$this->gameId, $this->score, $this->detail] = (new DailyEntry)->parseData($this->data);
         
-        $score = str($this->score)->explode('/')->reduce(function ($a, $b, $c) {
-            if ($c == 0) {
-                return str($b)->substr(-1, 1)->toString();
-            }
-
-            return $a . '/' . str($b)->substr(0, 1)->toString();
-        }, '');
-
-        $detail = explode(PHP_EOL, $this->score);
-        unset($detail[0]);
-        unset($detail[1]);
-                       
-        $detail = (implode(PHP_EOL, $detail));
+        $this->validate([
+            'gameId' => ['required', new GameIdRule()],
+            'score'  => ['required', new ScoreRule()],
+            'detail' => ['required', new DetailRule()],
+        ]);
 
         DailyScore::query()->create([
-            'game_id' => $gameId,
-            'score'   => $score,
-            'detail'  => $detail
+            'game_id' => $this->gameId,
+            'score'   => $this->score,
+            'detail'  => $this->detail,
         ]);
     }
 }
