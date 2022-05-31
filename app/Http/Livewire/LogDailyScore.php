@@ -15,6 +15,7 @@ use Livewire\Component;
 class LogDailyScore extends Component
 {
     public ?string $data   = null;
+    public ?string $word   = null;
     public ?string $gameId = null;
     public ?string $score  = null;
     public ?string $detail = null;
@@ -26,6 +27,11 @@ class LogDailyScore extends Component
 
     public function save()
     {
+        $this->validate([
+            'data' => 'required',
+            'word' => 'required',
+        ]);
+
         [$this->gameId, $this->score, $this->detail] = (new DailyEntry)->parseData($this->data);
         
         $this->validate([
