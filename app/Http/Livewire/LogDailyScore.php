@@ -71,7 +71,7 @@ class LogDailyScore extends Component
             'word' => new WordIsvalidRule($this->gameId),
         ]);
     }
-
+    
     private function dispatchJobIfWordOfDayExists(DailyScore $score): void
     {
         if ($wordOfDay = WordOfDay::whereGameId($score->game_id)->first()) {

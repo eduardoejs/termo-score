@@ -30,10 +30,10 @@ class DailyScore extends Model
     //     get: get: fn () => 'edu',
     //     set: fn ($value) => str($value)->replace('#', '')
     // );
-    protected function gameId(): Attribute
+    public function gameId(): Attribute
     {
         return new Attribute(
-            set: fn ($value) => (int) str($value)->replace('#', '')->toString()
+            set: fn ($value) => (int)str($value)->replace('#', '')->toString()
         );
     }
 }
