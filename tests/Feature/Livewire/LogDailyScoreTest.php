@@ -108,3 +108,19 @@ test('if word already exists for the given game id we should check if is valid',
         ->call('save')
         ->assertHasErrors(['word' => WordIsvalidRule::class]);
 });
+
+test('if word doesnt exists we will set the status pending and war the user that the score is being calculated', function () {
+    $score = 'joguei term.ooo #81 1/6 🔥 1' . PHP_EOL . PHP_EOL . '🟩🟩🟩🟩🟩';
+
+    livewire(LogDailyScore::class)
+        ->set('data', $score)
+        ->set('word', 'paulo')
+        ->set('word_confirmation', 'paulo')
+        ->call('save')
+        ->assertHasNoErrors(['word' => WordIsvalidRule::class]);
+
+    expect(DailyScore::query()->first())
+        ->status->toBe('pending')
+        ->word->toBe('paulo')
+        ->game_id->toBe(81);
+});

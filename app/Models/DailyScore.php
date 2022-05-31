@@ -8,4 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class DailyScore extends Model
 {
     use HasFactory;
+
+    protected static function booted()
+    {
+        static::creating(function($model){
+            $model->game_id = str($model->game_id)->replace('#', '');
+        });
+    }
 }

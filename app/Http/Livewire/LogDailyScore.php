@@ -21,6 +21,7 @@ class LogDailyScore extends Component
     public ?string $gameId            = null;
     public ?string $score             = null;
     public ?string $detail            = null;
+    public ?string $message           = null;
 
     public function render(): Factory|View|Application
     {
@@ -39,17 +40,21 @@ class LogDailyScore extends Component
         $this->validate([
             'gameId' => ['required', new GameIdRule()],
             'score'  => ['required', new ScoreRule()],
-            'detail' => ['required', new DetailRule()],            
+            'detail' => ['required', new DetailRule()],
         ]);
-
+        
         $this->validate([
-            'word'   => new WordIsvalidRule($this->gameId),
+            'word' => new WordIsvalidRule($this->gameId),
         ]);
 
         DailyScore::query()->create([
             'game_id' => $this->gameId,
             'score'   => $this->score,
             'detail'  => $this->detail,
+            'word'    => $this->word,
+            'status'  => 'pending',
         ]);
+
+        $this->message = 'Your score is being calculated.';
     }
 }
