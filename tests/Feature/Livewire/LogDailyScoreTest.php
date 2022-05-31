@@ -1,10 +1,12 @@
 <?php
 
-use App\Http\Livewire\LogDailyScore;
-use App\Models\DailyScore;
+use App\Rules\ScoreRule;
+use App\Models\WordOfDay;
 use App\Rules\DetailRule;
 use App\Rules\GameIdRule;
-use App\Rules\ScoreRule;
+use App\Models\DailyScore;
+use App\Rules\WordIsvalidRule;
+use App\Http\Livewire\LogDailyScore;
 use function Pest\Livewire\livewire;
 
 it('should be able to save the daily score and track the id of the game', function ($score, $expectedGameId, $expectedScore, $expectedDetail) {
@@ -102,6 +104,7 @@ test('if word already exists for the given game id we should check if is valid',
     livewire(LogDailyScore::class)
         ->set('data', $score)
         ->set('word', 'paulo')
+        ->set('word_confirmation', 'paulo')
         ->call('save')
         ->assertHasErrors(['word' => WordIsvalidRule::class]);
 });
