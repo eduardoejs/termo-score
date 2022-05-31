@@ -2,6 +2,7 @@
 
 namespace App\Events;
 
+use App\Models\WordOfDay;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PresenceChannel;
@@ -14,8 +15,9 @@ class WordOfDayCreatedEvent
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public function __construct()
-    {
+    public function __construct(
+        public WordOfDay $wordOfDay
+    )  {
         //
     }
     

@@ -33,7 +33,7 @@ class DailyScore extends Model
     protected function gameId(): Attribute
     {
         return new Attribute(
-            set: fn ($value) => str($value)->replace('#', '')->toString()
+            set: fn ($value) => (int) str($value)->replace('#', '')->toString()
         );
     }
 }
