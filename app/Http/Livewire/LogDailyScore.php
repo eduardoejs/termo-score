@@ -14,11 +14,12 @@ use Livewire\Component;
 
 class LogDailyScore extends Component
 {
-    public ?string $data   = null;
-    public ?string $word   = null;
-    public ?string $gameId = null;
-    public ?string $score  = null;
-    public ?string $detail = null;
+    public ?string $data              = null;
+    public ?string $word              = null;
+    public ?string $word_confirmation = null;
+    public ?string $gameId            = null;
+    public ?string $score             = null;
+    public ?string $detail            = null;
 
     public function render(): Factory|View|Application
     {
@@ -29,7 +30,7 @@ class LogDailyScore extends Component
     {
         $this->validate([
             'data' => 'required',
-            'word' => ['required', 'size:5'],
+            'word' => ['required', 'size:5', 'confirmed'],
         ]);
 
         [$this->gameId, $this->score, $this->detail] = (new DailyEntry)->parseData($this->data);
