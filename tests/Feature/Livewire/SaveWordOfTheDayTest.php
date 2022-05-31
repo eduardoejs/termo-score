@@ -1,7 +1,9 @@
 <?php
 
+use App\Events\WordOfDayCreatedEvent;
 use App\Http\Livewire\SaveWordOfTheDay;
 use App\Models\WordOfDay;
+use Illuminate\Support\Facades\Event;
 
 use function Pest\Livewire\livewire;
 
@@ -43,6 +45,20 @@ it('game id should be unique', function () {
         ->call('save')
         ->assertHasErrors(['game_id' => 'unique']);
 });
+
+it('should dispatch an event WordOfDayCreated', function () {
+    
+    Event::fake();
+    
+    livewire(SaveWordOfTheDay::class)
+        ->set('word', 'teste')
+        ->set('word_confirmation', 'teste')
+        ->set('game_id', 81)
+        ->call('save');
+
+    Event::assertDispatched(WordOfDayCreatedEvent::class);
+});
+
 
 
 
