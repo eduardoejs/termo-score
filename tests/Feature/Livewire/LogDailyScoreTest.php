@@ -6,6 +6,9 @@ use App\Rules\DetailRule;
 use App\Rules\GameIdRule;
 use App\Models\DailyScore;
 use App\Rules\WordIsvalidRule;
+use App\Jobs\CheckDailyScoreJob;
+use Illuminate\Support\Facades\Bus;
+
 use App\Http\Livewire\LogDailyScore;
 use function Pest\Livewire\livewire;
 
@@ -110,6 +113,29 @@ test('if word already exists for the given game id we should check if is valid',
         ->call('save')
         ->assertHasErrors(['word' => WordIsvalidRule::class]);
 });
+
+test('if word of day exists and is valid we should dispatch a job to calculate the score', function () {
+    
+    Bus::fake();
+
+    WordOfDay::factory()->create(['word' => 'teste', 'game_id' => 81]);
+
+    $score = 'joguei term.ooo #81 1/6 🔥 1' . PHP_EOL . PHP_EOL . '🟩🟩🟩🟩🟩';
+
+    livewire(LogDailyScore::class)
+        ->set('data', $score)
+        ->set('word', 'teste')
+        ->set('word_confirmation', 'teste')
+        ->call('save')
+        ->assertHasNoErrors();
+
+    $score = DailyScore::query()->first();
+
+    Bus::assertDispatched(CheckDailyScoreJob::class, function ($job) use ($score) {
+        return $job->wordOfDay->word === 'teste' && $job->dailyScore->is($score);
+    });
+});
+
 
 test('if word doesnt exists we will set the status pending and war the user that the score is being calculated', function () {
     $score = 'joguei term.ooo #81 1/6 🔥 1' . PHP_EOL . PHP_EOL . '🟩🟩🟩🟩🟩';

@@ -1,6 +1,7 @@
 <?php
 
 use App\Events\WordOfDayCreatedEvent;
+use App\Http\Livewire\LogDailyScore;
 use App\Http\Livewire\SaveWordOfTheDay;
 use App\Jobs\CheckDailyScoreJob;
 use App\Models\DailyScore;
