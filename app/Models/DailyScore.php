@@ -28,11 +28,11 @@ class DailyScore extends Model
     // mutators: forma atual
     // return new Attribute(
     //     get: get: fn () => 'edu',
-    //     set: fn ($value) => str($value)->replace('#', '')    
+    //     set: fn ($value) => str($value)->replace('#', '')
     // );
     protected function gameId(): Attribute
     {
-        return new Attribute(            
+        return new Attribute(
             set: fn ($value) => str($value)->replace('#', '')->toString()
         );
     }
