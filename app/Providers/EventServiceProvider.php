@@ -3,11 +3,15 @@
 namespace App\Providers;
 
 use App\Events\ChegueiA10Pessoas;
+use App\Events\UserSavedEvent;
 use App\Events\WordOfDayCreatedEvent;
 use App\Listeners\AbrirAPortaDoBancoListener;
 use App\Listeners\CreateJobsToCheckDailyScoreListener;
 use App\Listeners\EnviarEmailDeBoasVindasListener;
 use App\Listeners\EnviarUmEmailQualquerListener;
+use App\Listeners\SoltarUmLikeListener;
+use App\Models\User;
+use App\Observers\UserObserver;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -30,13 +34,13 @@ class EventServiceProvider extends ServiceProvider
         ],
 
         /**
-         * Providers: Regras da sua aplicação que serão iniciadas juntas 
+         * Providers: Regras da sua aplicação que serão iniciadas juntas
          * quando o framework Laravel for iniciado
-         * 
-         * EventServiceProvider: Realiza o Mapeamento dos eventos com os 
+         *
+         * EventServiceProvider: Realiza o Mapeamento dos eventos com os
          * seus respectivos Listeners.
-         * 
-         * Mapeamento: Informo para a aplicação que caso ocorra um evento 
+         *
+         * Mapeamento: Informo para a aplicação que caso ocorra um evento
          * de ChegueiA10Pessoas dispare/avise o Listener informado
          */
         ChegueiA10Pessoas::class => [
@@ -44,10 +48,15 @@ class EventServiceProvider extends ServiceProvider
             AbrirAPortaDoBancoListener::class,
         ],
 
-        // se executar o comando artisan event:generate ele cria as classes 
+        // se executar o comando artisan event:generate ele cria as classes
         // automaticamente conforme informado abaixo
         'App\Events\ChegueiA800Subscribers' => [
             'App\Listeners\SoltarFogos',
+        ],
+
+        // Mapeando um evento e seu listener
+        UserSavedEvent::class => [
+            SoltarUmLikeListener::class,
         ]
     ];
 
@@ -58,7 +67,7 @@ class EventServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        User::observe(UserObserver::class);
     }
 
     /**

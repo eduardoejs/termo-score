@@ -13,7 +13,7 @@ class Playground extends Command
 
     public function handle()
     {
-        // método event realiza o dispatch do(s) 
+        // método event realiza o dispatch do(s)
         // evento(s) passados como parêmetro
         event(new ChegueiA10Pessoas());
 
