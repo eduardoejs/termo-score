@@ -14,11 +14,6 @@ class CheckDailyScoreJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    /**
-     * Create a new job instance.
-     *
-     * @return void
-     */
     public function __construct(
         public WordOfDay $wordOfDay,
         public DailyScore $dailyScore
@@ -26,13 +21,20 @@ class CheckDailyScoreJob implements ShouldQueue
         //
     }
 
-    /**
-     * Execute the job.
-     *
-     * @return void
-     */
     public function handle()
     {
-        //
+        $points = match ($this->dailyScore->score) {
+            '1/6' => 10,
+            '2/6' => 5,
+            '3/6' => 4,
+            '4/6' => 2,
+            '5/6' => 1,
+            '6/6' => 0,
+            'X/6' => -1,
+        };
+
+        $this->dailyScore->points = $points;
+        $this->dailyScore->status = DailyScore::STATUS_FINISHED;
+        $this->dailyScore->save();
     }
 }

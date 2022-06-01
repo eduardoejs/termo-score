@@ -10,6 +10,8 @@ class DailyScore extends Model
 {
     use HasFactory;
 
+    const STATUS_FINISHED = 'finished';
+
     // booted
     // protected static function booted()
     // {
