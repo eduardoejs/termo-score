@@ -33,8 +33,15 @@ class CheckDailyScoreJob implements ShouldQueue
             'X/6' => -1,
         };
 
+        $status = DailyScore::STATUS_FINISHED;
+
+        if ($this->wordOfDay->word !== $this->dailyScore->word) {
+            $points = 0;
+            $status = DailyScore::STATUS_WRONG_WORD;
+        }
+
         $this->dailyScore->points = $points;
-        $this->dailyScore->status = DailyScore::STATUS_FINISHED;
+        $this->dailyScore->status = $status;
         $this->dailyScore->save();
     }
 }

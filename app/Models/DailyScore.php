@@ -11,6 +11,7 @@ class DailyScore extends Model
     use HasFactory;
 
     const STATUS_FINISHED = 'finished';
+    const STATUS_WRONG_WORD = 'wrong_word';
 
     // booted
     // protected static function booted()

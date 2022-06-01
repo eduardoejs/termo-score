@@ -28,3 +28,18 @@ it('should calculate the correct points', function ($gameScore, $expectedPoints)
     'not enough' => ['X/6', -1],
 // ])->requiresMysql();
 ]);
+
+it('should not calculate the points if the word is not the same', function () {
+     // Arrange
+     $dailyScore = DailyScore::factory()->create(['game_id' => 1, 'score' => '1/6', 'word' => 'phone']);
+     $word       = WordOfDay::factory()->create(['word' => 'score', 'game_id' => 1]);
+ 
+     // Act
+     CheckDailyScoreJob::dispatchSync($word, $dailyScore); // force the job run syncronous
+ 
+     // Assert
+     expect($dailyScore->refresh())
+         ->points->toBe(0)
+         ->status->toBe(DailyScore::STATUS_WRONG_WORD);
+});
+
