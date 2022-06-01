@@ -3,9 +3,12 @@
 namespace App\Listeners;
 
 use App\Events\ChegueiA10Pessoas;
+use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
 
-class EnviarUmEmailQualquerListener
+class EnviarUmEmailQualquerListener implements ShouldQueue
 {
+    use Queueable;
 
     /**
      * Um Listener ouve um determinado evento

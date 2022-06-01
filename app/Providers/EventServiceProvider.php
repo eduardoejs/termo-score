@@ -42,6 +42,12 @@ class EventServiceProvider extends ServiceProvider
         ChegueiA10Pessoas::class => [
             EnviarUmEmailQualquerListener::class,
             AbrirAPortaDoBancoListener::class,
+        ],
+
+        // se executar o comando artisan event:generate ele cria as classes 
+        // automaticamente conforme informado abaixo
+        'App\Events\ChegueiA800Subscribers' => [
+            'App\Listeners\SoltarFogos',
         ]
     ];
 
