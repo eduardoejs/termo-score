@@ -41,12 +41,10 @@ class User extends Authenticatable implements MustVerifyEmail
     // Assim que o model estiver "iniciado - booted"
     protected static function booted()
     {
-        // amarra ao evento de updated do model uma ação/regra, 
+        // amarra ao evento de updated do model uma ação/regra,
         // sempre passando o usuário como parâmetro para o evento
         static::updated(function (self $user) {
-            
             logger('updated via model@booted :: ' . __METHOD__ . ' :: ' . $user->name);
-
         });
     }
 

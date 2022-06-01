@@ -3,12 +3,14 @@
 namespace App\Providers;
 
 use App\Events\ChegueiA10Pessoas;
+use App\Events\PedidoUpdatedEvent;
 use App\Events\UserSavedEvent;
 use App\Events\WordOfDayCreatedEvent;
 use App\Listeners\AbrirAPortaDoBancoListener;
 use App\Listeners\CreateJobsToCheckDailyScoreListener;
 use App\Listeners\EnviarEmailDeBoasVindasListener;
 use App\Listeners\EnviarUmEmailQualquerListener;
+use App\Listeners\PedidoListener;
 use App\Listeners\SoltarUmLikeListener;
 use App\Models\User;
 use App\Observers\UserObserver;
@@ -57,6 +59,10 @@ class EventServiceProvider extends ServiceProvider
         // Mapeando um evento e seu listener
         UserSavedEvent::class => [
             SoltarUmLikeListener::class,
+        ],
+
+        PedidoUpdatedEvent::class => [
+            PedidoListener::class,
         ]
     ];
 
