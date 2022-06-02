@@ -8,11 +8,11 @@ class ScoreRule implements Rule
 {
     public function passes($attribute, $value): bool
     {
-        return (bool)preg_match('/^(([1-6]|X)\/6)$/', $value);
+        return preg_match('/^(([1-6]|X)\/6)$/', $value);
     }
 
-    public function message()
+    public function message(): string
     {
-        return 'The validation error message.';
+        return 'Score Rule invalid!';
     }
 }

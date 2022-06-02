@@ -13,6 +13,6 @@ class GameIdRule implements Rule
 
     public function message()
     {
-        return 'The validation error message.';
+        return 'Game ID Rule invalid!';
     }
 }

@@ -23,7 +23,7 @@ class LogDailyScore extends Component
     public ?string $gameId            = null;
     public ?string $score             = null;
     public ?string $detail            = null;
-    public ?string $message           = null;
+    public ?string $status            = null;
 
     public function render(): Factory|View|Application
     {
@@ -44,7 +44,7 @@ class LogDailyScore extends Component
             'status'  => 'pending',
         ]);
 
-        $this->message = 'Your score is being calculated.';
+        $this->status = 'Your score is being calculated.';
 
         $this->dispatchJobIfWordOfDayExists($score);
     }
@@ -60,7 +60,7 @@ class LogDailyScore extends Component
     private function validateGameScore(): void
     {
         [$this->gameId, $this->score, $this->detail] = (new DailyEntry)->parseData($this->data);
-        
+                
         $this->validate([
             'gameId' => ['required', new GameIdRule()],
             'score'  => ['required', new ScoreRule()],
