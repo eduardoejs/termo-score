@@ -32,6 +32,12 @@ it('should be able to save the daily score and track the id of the game', functi
         '1/6',
         '🟩🟩🟩🟩🟩'
     ],
+    '*1.6' => [
+        'joguei term.ooo #81 *1/6 🔥 1' . PHP_EOL . PHP_EOL . '🟩🟩🟩🟩🟩',
+        81,
+        '1/6',
+        '🟩🟩🟩🟩🟩'
+    ],
     '2.6' => [
         'joguei term.ooo #81 2/6 🔥 1' . PHP_EOL . PHP_EOL . '⬛🟨🟨⬛⬛' . PHP_EOL . '🟩🟩🟩🟩🟩',
         81,
