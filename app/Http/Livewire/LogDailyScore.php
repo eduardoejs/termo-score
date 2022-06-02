@@ -45,6 +45,7 @@ class LogDailyScore extends Component
         ]);
 
         $this->status = 'Your score is being calculated.';
+        $this->reset('word', 'word_confirmation', 'gameId', 'score', 'detail', 'data');
 
         $this->dispatchJobIfWordOfDayExists($score);
     }

@@ -34,6 +34,6 @@ class SaveWordOfTheDay extends Component
             ]);
 
         $this->status = "Word saved";
-        $this->reset('word', 'game_id');
+        $this->reset('word', 'word_confirmation', 'game_id');
     }
 }

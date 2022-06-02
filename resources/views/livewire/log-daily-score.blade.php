@@ -12,7 +12,7 @@
         <x-button.custom>Submit</x-button.custom> 
     </x-form>    
     
-    {{-- @if ($errors->any())
+    @if ($errors->any())
         <div class="">
             <ul>
                 @foreach ($errors->all() as $error)
@@ -20,6 +20,6 @@
                 @endforeach
             </ul>
         </div>
-    @endif --}}
+    @endif
 </x-card>
 
