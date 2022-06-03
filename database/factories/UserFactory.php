@@ -43,7 +43,7 @@ class UserFactory extends Factory
 
     public function admin(): self
     {
-        return $this->afterCreating(function (User $user){
+        return $this->afterCreating(function (User $user) {
             $user->admin = true;
             $user->save();
         });

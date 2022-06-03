@@ -7,11 +7,14 @@ use App\Models\DailyScore;
 use App\Models\User;
 use App\Models\WordOfDay;
 use Illuminate\Support\Facades\Bus;
-
 use Illuminate\Support\Facades\Event;
-
 use function Pest\Laravel\actingAs;
 use function Pest\Livewire\livewire;
+
+beforeEach(function() {
+    $user = User::factory()->admin()->createOne();
+    actingAs($user);
+});
 
 it('should be able to save word of the day', function () {
     livewire(SaveWordOfTheDay::class)
@@ -87,15 +90,14 @@ it('should be possible to create a word of the day only if user is an admin', fu
     // Testing admin user
     /** @var User $user */
     $user = User::factory()->admin()->createOne();
-    actingAs($user);    
+    actingAs($user);
     livewire(SaveWordOfTheDay::class)
         ->assertSuccessful();
 
     // Testing non admin user
     /** @var User $nonAdminUser */
-    $nonAdminUser = User::factory()->createOne();    
+    $nonAdminUser = User::factory()->createOne();
     actingAs($nonAdminUser);
     livewire(SaveWordOfTheDay::class)
         ->assertForbidden();
 });
-
