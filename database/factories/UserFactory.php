@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
@@ -15,7 +16,7 @@ class UserFactory extends Factory
      *
      * @return array<string, mixed>
      */
-    public function definition()
+    public function definition(): array
     {
         return [
             'name'              => $this->faker->name(),
@@ -31,12 +32,20 @@ class UserFactory extends Factory
      *
      * @return static
      */
-    public function unverified()
+    public function unverified(): self
     {
         return $this->state(function (array $attributes) {
             return [
                 'email_verified_at' => null,
             ];
+        });
+    }
+
+    public function admin(): self
+    {
+        return $this->afterCreating(function (User $user){
+            $user->admin = true;
+            $user->save();
         });
     }
 }
