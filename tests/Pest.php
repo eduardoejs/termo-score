@@ -11,6 +11,8 @@
 |
 */
 
+use Illuminate\Support\Facades\DB;
+
 uses(Tests\TestCase::class, \Illuminate\Foundation\Testing\RefreshDatabase::class)->in('Feature');
 
 /*
@@ -42,4 +44,13 @@ expect()->extend('toBeOne', function () {
 function something()
 {
     // ..
+}
+
+function requiresMysql()
+{
+    if (DB::getDriverName() !== 'mysql') {
+        test()->markTestSkipped('This test requires MySQL database');
+    }
+
+    return test();
 }
