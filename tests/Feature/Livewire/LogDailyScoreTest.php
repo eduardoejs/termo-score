@@ -10,7 +10,15 @@ use App\Jobs\CheckDailyScoreJob;
 use Illuminate\Support\Facades\Bus;
 
 use App\Http\Livewire\LogDailyScore;
+use App\Models\User;
+
+use function Pest\Laravel\actingAs;
 use function Pest\Livewire\livewire;
+
+beforeEach(function() {
+    $user = User::factory()->createOne();
+    actingAs($user);
+});
 
 it('should be able to save the daily score and track the id of the game', function ($score, $expectedGameId, $expectedScore, $expectedDetail) {
     livewire(LogDailyScore::class)

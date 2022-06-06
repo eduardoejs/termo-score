@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\DailyScore;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -23,6 +24,7 @@ class DailyScoreFactory extends Factory
             'detail'  => 'joguei term.ooo #81 1/6 🔥 1' . PHP_EOL . PHP_EOL . '🟩🟩🟩🟩🟩',
             'word'    => $this->faker->text(5),
             'status'  => 'pending',
+            'user_id' => User::factory(),
         ];
     }
 
