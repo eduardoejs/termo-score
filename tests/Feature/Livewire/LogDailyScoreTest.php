@@ -16,6 +16,7 @@ use function Pest\Laravel\actingAs;
 use function Pest\Livewire\livewire;
 
 beforeEach(function() {
+    /** @var User $user */
     $user = User::factory()->createOne();
     actingAs($user);
 });
