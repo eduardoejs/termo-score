@@ -91,13 +91,11 @@ it('should be possible to create a word of the day only if user is an admin', fu
     /** @var User $user */
     $user = User::factory()->admin()->createOne();
     actingAs($user);
-    livewire(SaveWordOfTheDay::class)
-        ->assertSuccessful();
+    livewire(SaveWordOfTheDay::class)->assertSuccessful();
 
     // Testing non admin user
     /** @var User $nonAdminUser */
     $nonAdminUser = User::factory()->createOne();
     actingAs($nonAdminUser);
-    livewire(SaveWordOfTheDay::class)
-        ->assertForbidden();
+    livewire(SaveWordOfTheDay::class)->assertForbidden();
 });
