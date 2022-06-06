@@ -36,7 +36,7 @@ class LogDailyScore extends Component
 
         $this->validateGameScore();
         
-        $score = DailyScore::query()->create([
+        $score = auth()->user()->dailyScores()->create([
             'game_id' => $this->gameId,
             'score'   => $this->score,
             'detail'  => $this->detail,
@@ -45,9 +45,11 @@ class LogDailyScore extends Component
         ]);
 
         $this->status = 'Your score is being calculated.';
-        $this->reset('word', 'word_confirmation', 'gameId', 'score', 'detail', 'data');
-
         $this->dispatchJobIfWordOfDayExists($score);
+        $this->emit('dailyScore::saved');
+             
+        // $this->reset('word', 'word_confirmation', 'gameId', 'score', 'detail', 'data');
+        $this->reset('word', 'word_confirmation', 'data');
     }
 
     private function validateBaseData(): void

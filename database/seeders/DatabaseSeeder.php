@@ -2,6 +2,8 @@
 
 namespace Database\Seeders;
 
+use App\Models\DailyScore;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -15,15 +17,18 @@ class DatabaseSeeder extends Seeder
     {
         // \App\Models\User::factory(10)->create();
 
-        \App\Models\User::factory()->create([
+        $eduardo = User::factory()->create([
             'name'  => 'Eduardo Silva',
             'email' => 'edu@mail.com',
             'admin' => true,
         ]);
 
-        \App\Models\User::factory()->create([
+        $vitor = User::factory()->create([
             'name'  => 'Vitor Silva',
             'email' => 'vitor@mail.com',
         ]);
+
+        // DailyScore::factory()->for($eduardo, 'user')->count(20)->create();
+        // DailyScore::factory()->for($vitor, 'user')->count(20)->create();
     }
 }
