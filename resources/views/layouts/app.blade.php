@@ -22,7 +22,9 @@
         
         <div class="min-h-screen bg-slate-50">
             
-            @include('layouts.navigation')           
+            @include('layouts.navigation')   
+            
+            @livewire('notifications')
 
             {{ $slot }}
 
