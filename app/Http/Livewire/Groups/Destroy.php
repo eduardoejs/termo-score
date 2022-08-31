@@ -25,5 +25,6 @@ class Destroy extends Component
     public function destroy()
     {
         $this->group->delete();
+        $this->emit('group::refresh-list');
     }
 }

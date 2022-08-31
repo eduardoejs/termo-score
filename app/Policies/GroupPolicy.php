@@ -18,5 +18,5 @@ class GroupPolicy
     public function delete(User $user, Group $group): bool
     {
         return $user->is($group->user);
-    }    
+    }
 }
