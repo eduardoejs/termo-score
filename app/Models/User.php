@@ -80,4 +80,9 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasMany(DailyScore::class);
     }
+
+    public function groups(): HasMany
+    {
+        return $this->hasMany(Group::class);
+    }
 }

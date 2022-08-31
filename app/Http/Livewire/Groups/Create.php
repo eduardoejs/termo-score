@@ -7,7 +7,16 @@ use Livewire\Component;
 
 class Create extends Component
 {
-    public string $name = '';
+    public Group $group;
+
+    protected array $rules = [
+        'group.name' => ['required', 'string', 'min:3', 'max:30', 'unique:groups,name'],
+    ];
+
+    public function mount()
+    {
+        $this->group = new Group();
+    }
 
     public function render()
     {
@@ -16,6 +25,9 @@ class Create extends Component
 
     public function save()
     {
-        Group::query()->create(['user_id' => auth()->id(), 'name' =>  $this->name]);
+        $this->validate();
+
+        $this->group->user_id = auth()->id();
+        $this->group->save();        
     }
 }
