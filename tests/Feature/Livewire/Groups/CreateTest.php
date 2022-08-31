@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Livewire\Groups\Create;
+use App\Http\Livewire\Groups\Index;
 use App\Models\Group;
 use App\Models\User;
 
@@ -18,7 +19,7 @@ it('should be able to create a new group', function () {
         ->set('group.name', 'Test Group')
         ->call('save')
         ->assertHasNoErrors()
-        ->assertEmitted('group::refresh-list');
+        ->assertEmittedTo(Index::class, 'group::refresh-list');
     
     assertDatabaseCount(Group::class, 1); // ou passo o nome da tabela diretamente 'groups'    
 });

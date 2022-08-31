@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Livewire\Groups\Index;
 use App\Http\Livewire\Groups\Update;
 use App\Models\Group;
 use App\Models\User;
@@ -22,7 +23,7 @@ it('should be able to update a group name', function () {
         ->set('group.name', 'New Test Group')
         ->call('save')
         ->assertHasNoErrors()
-        ->assertEmitted('group::refresh-list');
+        ->assertEmittedTo(Index::class, 'group::refresh-list');
 
     expect($group->refresh())
         ->name->toBe('New Test Group');

@@ -1,12 +1,13 @@
 <?php
 
-use App\Http\Livewire\Groups\Destroy;
-use App\Models\Group;
 use App\Models\User;
+use App\Models\Group;
+use App\Http\Livewire\Groups\Index;
 
 use function Pest\Laravel\actingAs;
-use function Pest\Laravel\assertDatabaseCount;
 use function Pest\Livewire\livewire;
+use App\Http\Livewire\Groups\Destroy;
+use function Pest\Laravel\assertDatabaseCount;
 
 beforeEach(function() {
     $this->user = User::factory()->createOne();
@@ -18,7 +19,7 @@ it('should be able to delete a group', function () {
 
     livewire(Destroy::class, compact('group'))
         ->call('destroy')
-        ->assertEmitted('group::refresh-list');
+        ->assertEmittedTo(Index::class, 'group::refresh-list');
         
     assertDatabaseCount(Group::class, 0);
 });
